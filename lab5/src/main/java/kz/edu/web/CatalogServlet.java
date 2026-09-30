@@ -24,9 +24,9 @@ public class CatalogServlet extends HttpServlet {
         String ctx = request.getContextPath();
 
         out.println("<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
-                + "<title>Каталог товаров</title></head><body>");
+                + "<title>Каталог товаров</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>");
         out.println("<h1>Каталог товаров</h1>");
-        out.println("<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\">");
+        out.println("<table>");
         out.println("<tr><th>Товар</th><th>Цена</th><th></th></tr>");
 
         for (Product product : Catalog.PRODUCTS) {

@@ -25,7 +25,9 @@ public class LoginServlet extends HttpServlet {
 
         if (username == null || username.isBlank()) {
             response.setContentType("text/html; charset=UTF-8");
-            response.getWriter().println("<h2>Необходимо указать логин</h2>");
+            response.getWriter().println("<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+                    + "<title>Вход в систему</title><link rel=\"stylesheet\" href=\"style.css\"></head>"
+                    + "<body><h2>Необходимо указать логин</h2></body></html>");
             return;
         }
 

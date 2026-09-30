@@ -21,16 +21,22 @@ public class ProfileServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
 
         if (session == null || session.getAttribute("username") == null) {
-            response.getWriter().println("<h2>Необходимо войти в систему</h2>"
-                    + "<p><a href=\"login.html\">Войти</a></p>");
+            response.getWriter().println(page("<h2>Необходимо войти в систему</h2>"
+                    + "<p><a href=\"login.html\">Войти</a></p>"));
             return;
         }
 
         String username = (String) session.getAttribute("username");
 
-        response.getWriter().println(
+        response.getWriter().println(page(
                 "<h1>Добро пожаловать, " + Html.escape(username) + "!</h1>"
                         + "<p><a href=\"logout\">Выйти</a></p>"
-        );
+        ));
+    }
+
+    private String page(String body) {
+        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+                + "<title>Профиль</title><link rel=\"stylesheet\" href=\"style.css\"></head>"
+                + "<body>" + body + "</body></html>";
     }
 }

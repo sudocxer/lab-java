@@ -26,8 +26,7 @@ public class TemperatureServlet extends HttpServlet {
 
         if (celsiusValue == null || celsiusValue.isBlank()) {
             response.getWriter().println(
-                    "<h2>Необходимо указать температуру в градусах Цельсия</h2>"
-            );
+                    page("<h2>Необходимо указать температуру в градусах Цельсия</h2>"));
             return;
         }
 
@@ -35,12 +34,16 @@ public class TemperatureServlet extends HttpServlet {
             double celsius = Double.parseDouble(celsiusValue);
             double fahrenheit = celsius * 9.0 / 5.0 + 32.0;
 
-            response.getWriter().println(String.format(Locale.US,
-                    "<h1>%.1f &deg;C = %.1f &deg;F</h1>", celsius, fahrenheit));
+            response.getWriter().println(page(String.format(Locale.US,
+                    "<h1>%.1f &deg;C = %.1f &deg;F</h1>", celsius, fahrenheit)));
         } catch (NumberFormatException e) {
-            response.getWriter().println(
-                    "<h2>Введите корректное число</h2>"
-            );
+            response.getWriter().println(page("<h2>Введите корректное число</h2>"));
         }
+    }
+
+    private String page(String body) {
+        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+                + "<title>Конвертер температуры</title><link rel=\"stylesheet\" href=\"style.css\"></head>"
+                + "<body>" + body + "</body></html>";
     }
 }

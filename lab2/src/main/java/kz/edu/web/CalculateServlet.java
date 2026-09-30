@@ -23,9 +23,7 @@ public class CalculateServlet extends HttpServlet {
         if (aValue == null || bValue == null ||
                 aValue.isBlank() || bValue.isBlank()) {
 
-            response.getWriter().println(
-                    "<h2>Необходимо заполнить оба поля</h2>"
-            );
+            response.getWriter().println(page("<h2>Необходимо заполнить оба поля</h2>"));
             return;
         }
 
@@ -35,13 +33,15 @@ public class CalculateServlet extends HttpServlet {
 
             double result = a + b;
 
-            response.getWriter().println(
-                    "<h1>Результат: " + result + "</h1>"
-            );
+            response.getWriter().println(page("<h1>Результат: " + result + "</h1>"));
         } catch (NumberFormatException e) {
-            response.getWriter().println(
-                    "<h2>Введите корректные числа</h2>"
-            );
+            response.getWriter().println(page("<h2>Введите корректные числа</h2>"));
         }
+    }
+
+    private String page(String body) {
+        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
+                + "<title>Калькулятор</title><link rel=\"stylesheet\" href=\"style.css\"></head>"
+                + "<body>" + body + "</body></html>";
     }
 }

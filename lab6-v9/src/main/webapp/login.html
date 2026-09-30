@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вход в систему</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth">
+
+<div class="login-card">
+  <div class="brand big">⏱ Audit<span>Log</span></div>
+  <p class="muted">Войдите, чтобы открыть панель /admin/*</p>
+
+  <div id="msg" class="notice" hidden></div>
+
+  <form method="post" action="login">
+    <label for="username">Логин</label>
+    <input id="username" type="text" name="username" autofocus>
+
+    <label for="password">Пароль</label>
+    <input id="password" type="password" name="password">
+
+    <button type="submit">Войти</button>
+  </form>
+</div>
+
+<script>
+  var p = new URLSearchParams(location.search);
+  var text = p.has('denied') ? 'Доступ закрыт: сначала войдите в систему.'
+           : p.has('error') ? 'Необходимо указать логин.'
+           : p.has('bye') ? 'Вы вышли из системы.' : '';
+  if (text) { var m = document.getElementById('msg'); m.textContent = text; m.hidden = false; }
+</script>
+
+</body>
+</html>

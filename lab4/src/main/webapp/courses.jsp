@@ -7,13 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Учебные курсы</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <h1>Учебные курсы</h1>
 
-<table border="1" cellpadding="6" cellspacing="0">
+<table>
 <tr><th>Название</th><th>Часов</th><th>Тип</th></tr>
 
 <c:forEach var="course" items="${courses}">

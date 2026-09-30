@@ -32,13 +32,13 @@ public class CartServlet extends HttpServlet {
                 : (Map<Long, Integer>) session.getAttribute("cart");
 
         out.println("<!DOCTYPE html><html><head><meta charset=\"UTF-8\">"
-                + "<title>Корзина</title></head><body>");
+                + "<title>Корзина</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>");
         out.println("<h1>Корзина товаров</h1>");
 
         if (cart == null || cart.isEmpty()) {
             out.println("<p>Корзина пуста.</p>");
         } else {
-            out.println("<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\">");
+            out.println("<table>");
             out.println("<tr><th>Товар</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr>");
 
             double total = 0;

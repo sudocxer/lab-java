@@ -27,10 +27,11 @@ public class TableServlet extends HttpServlet {
 
         out.println("<!DOCTYPE html>");
         out.println("<html>");
-        out.println("<head><meta charset=\"UTF-8\"><title>Таблица умножения</title></head>");
+        out.println("<head><meta charset=\"UTF-8\"><title>Таблица умножения</title>"
+                + "<link rel=\"stylesheet\" href=\"style.css\"></head>");
         out.println("<body>");
         out.println("<h1>Таблица умножения от 1 до " + SIZE + "</h1>");
-        out.println("<table border=\"1\" cellpadding=\"6\" cellspacing=\"0\">");
+        out.println("<table>");
 
         out.print("<tr><th>&times;</th>");
         for (int col = 1; col <= SIZE; col++) {

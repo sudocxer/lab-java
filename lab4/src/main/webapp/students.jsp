@@ -7,13 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Список студентов</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <h1>Список студентов</h1>
 
-<table border="1" cellpadding="6" cellspacing="0">
+<table>
 <tr><th>ФИО</th><th>Группа</th><th>Баллы</th><th>Статус</th></tr>
 
 <c:forEach var="student" items="${students}">

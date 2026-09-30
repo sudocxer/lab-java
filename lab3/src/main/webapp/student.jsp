@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Студент</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>

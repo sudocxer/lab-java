@@ -23,6 +23,7 @@ public class HelloServlet extends HttpServlet {
                 <head>
                 <meta charset="UTF-8">
                 <title>Java EE</title>
+                <link rel="stylesheet" href="style.css">
                 </head>
                 <body>
                 <h1>Здравствуйте!</h1>
