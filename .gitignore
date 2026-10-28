@@ -3,3 +3,8 @@ target/
 .idea/
 *.iml
 .vs/
+# SQLite DB files (lab 7-8)
+data/
+*.db
+*.db-shm
+*.db-wal

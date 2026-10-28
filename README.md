@@ -19,13 +19,14 @@
 | [lab8/](lab8) | №8. JPA и объектно-реляционное отображение | JPA для сотрудников (Hibernate ORM) | [lab8/README.md](lab8/README.md) |
 | [lab9/](lab9) | №9. Связи между сущностями JPA | Категория — товары (OneToMany, ManyToOne, OneToOne, ManyToMany) | [lab9/README.md](lab9/README.md) |
 | [lab9-v1/](lab9-v1) | №9 (вариант 1). Связи между сущностями JPA | Факультет — студенты (University → Faculty → Student, Student ↔ Course) | [lab9-v1/README.md](lab9-v1/README.md) |
+| [lab10/](lab10) | №10. CDI и внедрение зависимостей | `EmployeeService`: Servlet → Service → Repository через `@Inject` (Weld), демонстрация scopes | [lab10/README.md](lab10/README.md) |
 
 ## Быстрый старт
 
 Каждый проект собирается и запускается независимо (JDK 17+, Maven 3.9+):
 
 ```bash
-cd lab1   # или lab2 / lab3 / lab4 / lab5 / lab6 / lab7 / lab7-v9 / lab8 / lab9 / lab9-v1
+cd lab1   # или lab2 / lab3 / lab4 / lab5 / lab6 / lab7 / lab7-v9 / lab8 / lab9 / lab9-v1 / lab10
 mvn clean package
 mvn jetty:run
 ```

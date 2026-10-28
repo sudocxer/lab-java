@@ -6,12 +6,18 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * При старте создаёт EntityManagerFactory по persistence unit «employeesPU»,
  * заполняет таблицу тестовыми данными и кладёт репозиторий в ServletContext.
+ * По умолчанию — файловая SQLite (data/lab8.db, путь меняется переменной DB_FILE): данные переиспользуются
+ * между запусками, тестовые данные добавляются только в пустую таблицу.
  * Если задана переменная окружения DB_URL (jdbc:postgresql://...), используется PostgreSQL.
  */
 @WebListener
@@ -30,6 +36,15 @@ public class AppListener implements ServletContextListener {
             overrides.put("jakarta.persistence.jdbc.url", url);
             overrides.put("jakarta.persistence.jdbc.user", System.getenv("DB_USER"));
             overrides.put("jakarta.persistence.jdbc.password", System.getenv("DB_PASSWORD"));
+            overrides.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        } else {
+            Path file = Paths.get(System.getenv().getOrDefault("DB_FILE", "data/lab8.db")).toAbsolutePath();
+            try {
+                Files.createDirectories(file.getParent());
+            } catch (IOException e) {
+                throw new IllegalStateException("Не удалось создать каталог для БД: " + file.getParent(), e);
+            }
+            overrides.put("jakarta.persistence.jdbc.url", "jdbc:sqlite:" + file + "?journal_mode=WAL&busy_timeout=5000");
         }
 
         emf = Persistence.createEntityManagerFactory("employeesPU", overrides);

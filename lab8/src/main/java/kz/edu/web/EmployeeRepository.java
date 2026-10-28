@@ -32,14 +32,19 @@ public class EmployeeRepository {
     }
 
     /**
-     * Поиск по имени (часть имени, без учёта регистра) и/или по минимальной зарплате.
+     * Поиск по имени (часть имени, регистр не важен) и/или по минимальной зарплате.
      * Любой из параметров может быть null — тогда условие не применяется.
      */
     public List<Employee> search(String name, Integer minSalary) {
         return read(em -> {
             StringBuilder jpql = new StringBuilder("SELECT e FROM Employee e WHERE 1 = 1");
-            if (name != null) {
-                jpql.append(" AND LOWER(e.fullName) LIKE :name ESCAPE '\\'");
+            List<String> variants = name == null ? List.of() : caseVariants(name);
+            if (!variants.isEmpty()) {
+                jpql.append(" AND (");
+                for (int i = 0; i < variants.size(); i++) {
+                    jpql.append(i == 0 ? "" : " OR ").append("e.fullName LIKE :name").append(i).append(" ESCAPE '\\'");
+                }
+                jpql.append(")");
             }
             if (minSalary != null) {
                 jpql.append(" AND e.salary >= :salary");
@@ -47,8 +52,8 @@ public class EmployeeRepository {
             jpql.append(" ORDER BY e.fullName");
 
             TypedQuery<Employee> query = em.createQuery(jpql.toString(), Employee.class);
-            if (name != null) {
-                query.setParameter("name", "%" + escapeLike(name.toLowerCase()) + "%");
+            for (int i = 0; i < variants.size(); i++) {
+                query.setParameter("name" + i, "%" + escapeLike(variants.get(i)) + "%");
             }
             if (minSalary != null) {
                 query.setParameter("salary", minSalary);
@@ -120,6 +125,17 @@ public class EmployeeRepository {
                 throw e;
             }
         }
+    }
+
+    /**
+     * SQLite приводит регистр (LOWER, LIKE) только для латиницы, поэтому для кириллицы
+     * ищем сразу по нескольким вариантам написания: как введено, строчные, с заглавной, заглавные.
+     */
+    private static List<String> caseVariants(String text) {
+        String lower = text.toLowerCase();
+        String capitalized = lower.isEmpty() ? lower : lower.substring(0, 1).toUpperCase() + lower.substring(1);
+        return new java.util.ArrayList<>(new java.util.LinkedHashSet<>(
+                List.of(text, lower, capitalized, text.toUpperCase())));
     }
 
     private static String escapeLike(String s) {
